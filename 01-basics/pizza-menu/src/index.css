@@ -108,6 +108,7 @@ body {
 .pizza {
   display: flex;
   gap: 3.2rem;
+  height: auto;
 }
 
 .pizza img {
