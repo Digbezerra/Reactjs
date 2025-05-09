@@ -2,7 +2,7 @@ import "./index.css";
 
 //How To use:
 //import on src/index.js
-//insert imports declarations
+//insert import declarations
 //import { ProfileCard } from "./components/challenges/ProfileCard";
 //import { userData } from "./components/challenges/mock";
 
