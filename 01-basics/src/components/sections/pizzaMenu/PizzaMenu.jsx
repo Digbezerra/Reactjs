@@ -1,64 +1,8 @@
-import React from "react";
-import ReactDom from "react-dom/client";
+import { pizzaData } from "../../../mock/pizzadata";
 
 import "./index.css";
 
-const pizzaData = [
-  {
-    name: "Focaccia",
-    ingredients: "Bread with italian olive oil and rosemary",
-    price: 6,
-    photoName: "pizzas/focaccia.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Margherita",
-    ingredients: "Tomato and mozarella",
-    price: 10,
-    photoName: "pizzas/margherita.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Spinaci",
-    ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
-    price: 12,
-    photoName: "pizzas/spinaci.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Funghi",
-    ingredients: "Tomato, mozarella, mushrooms, and onion",
-    price: 12,
-    photoName: "pizzas/funghi.jpg",
-    soldOut: false,
-  },
-  {
-    name: "Pizza Salamino",
-    ingredients: "Tomato, mozarella, and pepperoni",
-    price: 15,
-    photoName: "pizzas/salamino.jpg",
-    soldOut: true,
-  },
-  {
-    name: "Pizza Prosciutto",
-    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
-    price: 18,
-    photoName: "pizzas/prosciutto.jpg",
-    soldOut: false,
-  },
-];
-
-function App() {
-  return (
-    <div className="container">
-      <Header />
-      <Menu />
-      <Footer />
-    </div>
-  );
-}
-
-function Header() {
+export function Header() {
   return (
     <header className="header">
       <h1>Fast React Pizza Co.</h1>
@@ -66,7 +10,7 @@ function Header() {
   );
 }
 
-function Menu() {
+export function Menu() {
   const pizzas = pizzaData;
   const numPizzas = pizzas.length;
 
@@ -90,7 +34,7 @@ function Menu() {
   );
 }
 
-function Pizza({ pizzaObj }) {
+export function Pizza({ pizzaObj }) {
   const { name, ingredients, price, photoName, soldOut } = pizzaObj;
   return (
     <li className={`pizza ${soldOut && "sold-out"}`}>
@@ -104,7 +48,7 @@ function Pizza({ pizzaObj }) {
   );
 }
 
-function Order({ orderProps }) {
+export function Order({ orderProps }) {
   const { openHour, closeHour, isOpen } = orderProps;
   return isOpen ? (
     <div className="order">
@@ -118,7 +62,7 @@ function Order({ orderProps }) {
   );
 }
 
-function Footer() {
+export function Footer() {
   const hour = new Date().getHours();
   const openHour = 5;
   const closeHour = 22;
@@ -134,11 +78,3 @@ function Footer() {
     </footer>
   );
 }
-
-const root = ReactDom.createRoot(document.getElementById("root"));
-
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
