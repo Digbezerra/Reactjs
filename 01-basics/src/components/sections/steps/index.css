@@ -16,7 +16,7 @@ body {
   font-weight: 400;
   background-color: #f7f2e9;
   border-bottom: 1.6rem solid #7950f2;
-  min-height: 100vh;
+  height: 100vh;
   padding: 3.2rem;
   padding-bottom: 6rem;
 }
@@ -28,6 +28,13 @@ body {
   padding: 45px 140px;
   border-radius: 9px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4.5rem;
+  position: relative;
+}
+
+.content {
   display: flex;
   flex-direction: column;
   gap: 4.5rem;
@@ -72,6 +79,24 @@ body {
 .active {
   background-color: #7950f2;
   color: #fff;
+}
+
+.btn-close {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+  border: none;
+  background-color: #fff;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 3.2rem;
+  transition: all 0.2s;
+}
+
+.btn-close:hover {
+  color: #7950f2;
 }
 
 /*
