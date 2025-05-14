@@ -32,6 +32,11 @@ export function DateCounter() {
   const date = new Date();
   date.setDate(date.getDate() + counter);
 
+  const handleReset = () => {
+    setCounter(0);
+    setSteps(1);
+  };
+
   const incrementSteps = () => {
     setSteps((s) => s + 1);
   };
@@ -53,17 +58,35 @@ export function DateCounter() {
       <div className="container">
         <div className="counter">
           <p>Steps</p>
-          <button onClick={decrementSteps}>-</button>
+          <input
+            type="range"
+            min="1"
+            max="10"
+            onChange={(e) => setSteps(Number(e.target.value))}
+          />
           <span>{steps}</span>
-          <button onClick={incrementSteps}>+</button>
+          {/* <button onClick={decrementSteps}>-</button>
+          <span>{steps}</span>
+          <button onClick={incrementSteps}>+</button> */}
         </div>
         <div className="counter">
           <p>Counter</p>
           <button onClick={decrementCounter}>-</button>
-          <span>{counter}</span>
+          <input
+            type="number"
+            id="counter"
+            name="counter"
+            placeholder="days"
+            value={counter}
+            onChange={(e) => setCounter(Number(e.target.value))}
+          />
           <button onClick={incrementCounter}>+</button>
         </div>
-        <span className="date">{date.toDateString()}</span>
+        <span className="date">
+          {counter} days {counter < 0 ? "ago was" : "ahead will be"}{" "}
+          {date.toDateString()}
+        </span>
+        <button onClick={handleReset}> reset </button>
       </div>
     </>
   );
