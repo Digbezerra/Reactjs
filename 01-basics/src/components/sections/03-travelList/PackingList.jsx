@@ -1,32 +1,13 @@
 import { Item } from "./Item";
 
-const initialItems = [
-  {
-    id: 1,
-    description: "Passports",
-    quantity: 2,
-    packed: false,
-  },
-  {
-    id: 2,
-    description: "Socks",
-    quantity: 12,
-    packed: false,
-  },
-  {
-    id: 3,
-    description: "Charger",
-    quantity: 1,
-    packed: true,
-  },
-];
-
-export const PackingList = () => {
+export const PackingList = ({ items, onExcludeItems }) => {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((item) => {
-          return <Item item={item} key={item.id} />;
+        {items.map((item) => {
+          return (
+            <Item item={item} key={item.id} onExcludeItems={onExcludeItems} />
+          );
         })}
         {/* <div className="actions">
         <select id="sort-by" name="sort-by">

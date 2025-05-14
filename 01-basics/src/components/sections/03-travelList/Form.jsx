@@ -21,7 +21,7 @@ import { useState } from "react";
 //   },
 // ];
 
-export const Form = () => {
+export const Form = ({ onAddItem }) => {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
 
@@ -29,9 +29,9 @@ export const Form = () => {
     e.preventDefault();
     if (!description) return;
     const newItem = { description, quantity, id: Date.now(), packed: false };
-    console.log(newItem);
     setDescription("");
     setQuantity(1);
+    onAddItem(newItem);
   };
 
   return (
