@@ -17,11 +17,23 @@ export function App() {
     setItems((items) => items.filter((item) => item.id !== id));
   };
 
+  const handleToggleChecked = (id) => {
+    setItems((items) =>
+      items.map((item) => {
+        return item.id === id ? { ...item, packed: !item.packed } : item;
+      })
+    );
+  };
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItem={handleItems} />
-      <PackingList items={items} onExcludeItems={excludeItems} />
+      <PackingList
+        items={items}
+        onExcludeItems={excludeItems}
+        onToggleChecked={handleToggleChecked}
+      />
       <Stats />
     </div>
   );

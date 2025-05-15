@@ -1,12 +1,17 @@
 import { Item } from "./Item";
 
-export const PackingList = ({ items, onExcludeItems }) => {
+export const PackingList = ({ items, onExcludeItems, onToggleChecked }) => {
   return (
     <div className="list">
       <ul>
         {items.map((item) => {
           return (
-            <Item item={item} key={item.id} onExcludeItems={onExcludeItems} />
+            <Item
+              item={item}
+              key={item.id}
+              onExcludeItems={onExcludeItems}
+              onToggleChecked={onToggleChecked}
+            />
           );
         })}
         {/* <div className="actions">
