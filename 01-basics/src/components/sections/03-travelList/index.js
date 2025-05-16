@@ -8,6 +8,14 @@ import "./index.css";
 
 export function App() {
   const [items, setItems] = useState([]);
+  const totalItems = items.length;
+
+  const totalPackedItems = items.reduce(
+    (acc, curr) => (curr.packed ? acc + 1 : acc + 0),
+    0
+  );
+
+  const packedPercentage = ((totalPackedItems / totalItems) * 100).toFixed(2);
 
   const handleItems = (newItem) => {
     setItems((items) => [...items, newItem]);
@@ -34,7 +42,11 @@ export function App() {
         onExcludeItems={excludeItems}
         onToggleChecked={handleToggleChecked}
       />
-      <Stats />
+      <Stats
+        totalPackedItems={totalPackedItems}
+        totalItems={totalItems}
+        packedPercentage={packedPercentage}
+      />
     </div>
   );
 }

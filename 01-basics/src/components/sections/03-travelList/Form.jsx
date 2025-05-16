@@ -1,26 +1,5 @@
 import { useState } from "react";
 
-// const initialItems = [
-//   {
-//     id: 1,
-//     description: "Passports",
-//     quantity: 2,
-//     packed: false,
-//   },
-//   {
-//     id: 2,
-//     description: "Socks",
-//     quantity: 12,
-//     packed: false,
-//   },
-//   {
-//     id: 3,
-//     description: "Charger",
-//     quantity: 1,
-//     packed: true,
-//   },
-// ];
-
 export const Form = ({ onAddItem }) => {
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -43,6 +22,9 @@ export const Form = ({ onAddItem }) => {
         value={quantity}
         onChange={(e) => setQuantity(Number(e.target.value))}
       >
+        {
+          //Criando um array com vinte posicoes
+        }
         {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => {
           return (
             <option value={num} key={num}>
