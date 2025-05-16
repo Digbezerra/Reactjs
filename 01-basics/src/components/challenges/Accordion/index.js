@@ -1,12 +1,10 @@
 import "./index.css";
-import { Steps } from "./Steps";
+import { Accordion } from "./Accordion";
 
 export function App() {
   return (
     <div className="container">
-      <Steps />
+      <Accordion />
     </div>
   );
 }
-
-export default App;

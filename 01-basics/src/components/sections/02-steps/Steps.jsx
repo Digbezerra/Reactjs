@@ -1,3 +1,6 @@
+import { Message } from "./Message";
+import { Button } from "./Button";
+
 import "./index.css";
 
 import { useState } from "react";
@@ -42,26 +45,22 @@ export function Steps() {
               <div className={`number ${step >= 2 ? "active" : ""}`}>2</div>
               <div className={`number ${step >= 3 ? "active" : ""}`}>3</div>
             </div>
-            <p className="message">
-              Step {step}: {messages[step - 1]}
-            </p>
+            <Message step={step}>{messages[step - 1]}</Message>
             <div className="buttons">
-              <button
-                onClick={() => {
-                  handlePrevious();
-                }}
-                style={{ backgroundColor: "#7950f2", color: "#fff" }}
+              <Button
+                action={handlePrevious}
+                bgColor={"#7950f2"}
+                textColor={"#fff"}
               >
-                Previous
-              </button>
-              <button
-                onClick={() => {
-                  handleNext();
-                }}
-                style={{ backgroundColor: "#7950f2", color: "#fff" }}
+                👈 Previous
+              </Button>
+              <Button
+                action={handleNext}
+                bgColor={"#7950f2"}
+                textColor={"#fff"}
               >
-                Next
-              </button>
+                Next 👉
+              </Button>
             </div>
           </div>
         </div>

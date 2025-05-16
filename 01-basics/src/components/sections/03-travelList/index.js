@@ -33,6 +33,10 @@ export function App() {
     );
   };
 
+  const handleClearList = () => {
+    setItems([]);
+  };
+
   return (
     <div className="app">
       <Logo />
@@ -41,6 +45,7 @@ export function App() {
         items={items}
         onExcludeItems={excludeItems}
         onToggleChecked={handleToggleChecked}
+        onClearList={handleClearList}
       />
       <Stats
         totalPackedItems={totalPackedItems}

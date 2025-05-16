@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Item } from "./Item";
 
-export const PackingList = ({ items, onExcludeItems, onToggleChecked }) => {
+export const PackingList = ({
+  items,
+  onExcludeItems,
+  onToggleChecked,
+  onClearList,
+}) => {
   const [sortBy, setSortBy] = useState("input-order");
 
   let itemsSorted;
@@ -51,7 +56,7 @@ export const PackingList = ({ items, onExcludeItems, onToggleChecked }) => {
           <option value="z-to-a-order">Sort by Z to A</option>
           <option value="packed">Sort by Packed</option>
         </select>
-        <button>Clear List</button>
+        <button onClick={() => onClearList()}>Clear List</button>
       </div>
     </div>
   );
