@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom/client";
-import { App } from "./components/sections/02-steps";
+import { App } from "./components/challenges/Accordion";
 
 const root = ReactDom.createRoot(document.getElementById("root"));
 

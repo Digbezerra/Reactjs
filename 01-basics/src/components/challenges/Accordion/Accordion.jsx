@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Item } from "./Item";
 import { faqs } from "./mock";
 
@@ -10,11 +12,25 @@ import "./index.css";
 //import { userData } from "./components/challenges/mock";
 
 export function Accordion() {
+  const [curOpen, setCurOpen] = useState(null);
+
+  const handleCurOpen = (index) => {
+    setCurOpen(index);
+  };
+
   return (
     <>
       <div className="accordion">
         {faqs.map((item, index) => {
-          return <Item index={index} faqs={item} key={item.title} />;
+          return (
+            <Item
+              numCurOpen={curOpen}
+              index={index}
+              faqs={item}
+              key={item.title}
+              onCurOpen={handleCurOpen}
+            />
+          );
         })}
       </div>
     </>

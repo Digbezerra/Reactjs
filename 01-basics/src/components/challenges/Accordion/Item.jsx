@@ -1,20 +1,14 @@
-import { useState } from "react";
-
-export const Item = ({ faqs, index }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
+export const Item = ({ faqs, index, onCurOpen, numCurOpen }) => {
+  const open = numCurOpen === index;
 
   return (
     <div
-      className={`item ${isOpen ? "open" : ""}`}
-      onClick={() => handleToggleOpen()}
+      className={`item ${open ? "open" : ""}`}
+      onClick={() => onCurOpen(index)}
     >
       <span className="number">{index + 1}</span>
       <p className="title">{faqs.title}</p>
-      {isOpen ? (
+      {open ? (
         <>
           <span className="icon">-</span>
           <div className="content-box">
