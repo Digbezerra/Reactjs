@@ -15,7 +15,7 @@ export function Accordion() {
   const [curOpen, setCurOpen] = useState(null);
 
   const handleCurOpen = (index) => {
-    setCurOpen(index);
+    setCurOpen((curOpen) => (index === curOpen ? null : index));
   };
 
   return (
