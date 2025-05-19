@@ -5,15 +5,19 @@ export function TipCalculator() {
   const [tipPercentage, setTipPercentage] = useState(0);
   const [friendTipPercentage, setFriendTipPercentage] = useState(0);
 
+  const totalTipPercentage = (tipPercentage + friendTipPercentage) / 2;
+  const totalTipValue = (totalTipPercentage * billValue) / 100;
+  const totalBillValue = totalTipValue + billValue;
+
+  console.log("totalTipPercentage", totalTipPercentage);
+  console.log("totalTipValue", totalTipValue);
+  console.log("totalBill", totalBillValue);
+
   const resetApp = () => {
     setBillValue("");
     setTipPercentage(0);
     setFriendTipPercentage(0);
   };
-
-  console.log("billValue", billValue);
-  console.log("tipPercentage", tipPercentage);
-  console.log("friendTipPercentage", friendTipPercentage);
 
   return (
     <>
@@ -54,6 +58,11 @@ export function TipCalculator() {
           <option value="10">It was good (10%)</option>
           <option value="20">Absolutelly amazing! (20%)</option>
         </select>
+      </div>
+      <div>
+        <h2>
+          You'll pay R${totalBillValue} (${billValue} + {totalTipPercentage}%)
+        </h2>
       </div>
       <button onClick={() => resetApp()}>Reset</button>
     </>
