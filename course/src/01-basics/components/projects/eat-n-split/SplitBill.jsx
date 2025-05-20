@@ -1,3 +1,5 @@
+import { Button } from "./Button";
+
 export function SplitBill() {
   return (
     <section className="bill-section">
@@ -23,7 +25,7 @@ export function SplitBill() {
         </select>
       </div>
       <div>
-        <button>Split Bill</button>
+        <Button>Split Bill</Button>
       </div>
     </section>
   );

@@ -1,15 +1,36 @@
-export function AddFriend() {
+import { useState } from "react";
+import { Button } from "./Button";
+
+export function AddFriend({ onAddFriend }) {
+  const [friendName, setFriendName] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+
+  const handleAddFriend = () => {
+    const newFriend = { name: friendName, imgUrl: imgUrl };
+    setFriendName("");
+    setImgUrl("");
+    onAddFriend(newFriend);
+  };
+
   return (
     <div className="add-friend">
       <div className="input-name">
         <span>😊 Friend Name</span>
-        <input placeholder="friend name" />
+        <input
+          placeholder="friend name"
+          value={friendName}
+          onChange={(e) => setFriendName(e.target.value)}
+        />
       </div>
       <div className="input-image-url">
         <span>✔ Image URL</span>
-        <input placeholder="image url" />
+        <input
+          placeholder="image url"
+          value={imgUrl}
+          onChange={(e) => setImgUrl(e.target.value)}
+        />
       </div>
-      <button>Add</button>
+      <Button handleAddFriend={handleAddFriend}>Add</Button>
     </div>
   );
 }
