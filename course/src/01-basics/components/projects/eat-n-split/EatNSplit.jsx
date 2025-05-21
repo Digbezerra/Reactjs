@@ -14,11 +14,9 @@ export function EatNSplit() {
   };
 
   const onUpdateFriend = (friend) => {
-    console.log(friend);
     const newFriendsArray = friends.map((item, index) => {
       return index === curSelected ? { ...item, debit: friend.debit } : item;
     });
-    console.log(newFriendsArray);
     setFriends(newFriendsArray);
   };
 

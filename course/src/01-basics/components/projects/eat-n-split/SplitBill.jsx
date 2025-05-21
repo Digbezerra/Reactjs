@@ -8,13 +8,9 @@ export function SplitBill({ friends, curSelected, onUpdateFriend }) {
   const [friendExpense, setFriendExpense] = useState(0);
   const [whoPays, setWhoPays] = useState("me");
 
-  console.log("curselected", curSelected);
-
   const handleUpdateFriend = (friend) => {
-    console.log("friend", friend);
-    const debitValue = yourExpense - friendExpense;
+    const debitValue = yourExpense - friendExpense + friend.debit;
     const updatedFriend = { ...friend, debit: debitValue };
-    console.log("handleUpdateFriend", updatedFriend);
     onUpdateFriend(updatedFriend);
     setBillValue(0);
     setYourExpense(0);
@@ -43,6 +39,7 @@ export function SplitBill({ friends, curSelected, onUpdateFriend }) {
           id="your-expanse"
           name="your-expanse"
           onChange={(e) => setYourExpense(Number(e.target.value))}
+          disabled={whoPays === friends[curSelected]?.name}
         />
       </div>
       <div>
@@ -53,20 +50,37 @@ export function SplitBill({ friends, curSelected, onUpdateFriend }) {
           id="friend-expense"
           value={friendExpense}
           onChange={(e) => setFriendExpense(Number(e.target.value))}
+          disabled={whoPays === "me"}
         ></input>
       </div>
       <div>
         <span>🤔 Who's paying the bill?</span>
-        <select className="select-payment">
+        <select
+          className="select-payment"
+          value={whoPays}
+          id="who-pays"
+          name="who-pays"
+          onChange={(e) => {
+            setYourExpense(0);
+            setFriendExpense(0);
+            setWhoPays(e.target.value);
+          }}
+        >
           <option value="me">Me</option>
-          <option value="friend">{friends[curSelected]?.name}</option>
+          <option value={friends[curSelected]?.name}>
+            {friends[curSelected]?.name}
+          </option>
           <option value="us">Us</option>
         </select>
       </div>
       <div>
-        <button onClick={() => handleUpdateFriend(friends[curSelected])}>
-          Split Bill
-        </button>
+        {yourExpense + friendExpense === billValue ? (
+          <button onClick={() => handleUpdateFriend(friends[curSelected])}>
+            Split Bill
+          </button>
+        ) : (
+          <p style={{ color: "red" }}>Split the bill correctly</p>
+        )}
       </div>
     </section>
   );

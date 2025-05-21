@@ -1,6 +1,7 @@
-export function Friend({ friend, handleCurSelected, index }) {
+export function Friend({ friend, handleCurSelected, index, curSelected }) {
   let debitStatus = "";
   let colorText = "";
+  let selected = curSelected === index;
 
   if (friend.debit > 0) {
     debitStatus = `${friend.name} owes you ${friend.debit.toFixed(2)}$`;
@@ -13,7 +14,10 @@ export function Friend({ friend, handleCurSelected, index }) {
   } else debitStatus = `You and ${friend.name} are even`;
 
   return (
-    <li className="friend-item" key={friend.name}>
+    <li
+      className={`friend-item ${selected && "friend-item-selected"}`}
+      key={friend.name}
+    >
       <img src={friend.imgUrl} alt="Friend Profile" />
       <div>
         <p className="friend-name">{friend.name}</p>

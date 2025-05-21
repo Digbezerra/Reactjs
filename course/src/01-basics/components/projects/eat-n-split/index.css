@@ -98,6 +98,10 @@ button:hover {
   background-color: #f7f2e9;
 }
 
+.friend-item-selected {
+  background-color: #f7f2e9;
+}
+
 .friend-item img {
   width: 5rem;
   height: 5rem;
