@@ -2,23 +2,26 @@ import { useState } from "react";
 
 import { Button } from "./Button";
 
-export function SplitBill({ friends, curSelected, onAddFriend }) {
+export function SplitBill({ friends, curSelected, onUpdateFriend }) {
   const [billValue, setBillValue] = useState(0);
   const [yourExpense, setYourExpense] = useState(0);
   const [friendExpense, setFriendExpense] = useState(0);
-  const [whoPay, setWhoPay] = useState("me");
+  const [whoPays, setWhoPays] = useState("me");
 
-  const handleAddFriend = (friend) => {
-    console.log("handleAddFriend", friend);
+  console.log("curselected", curSelected);
+
+  const handleUpdateFriend = (friend) => {
+    console.log("friend", friend);
     const debitValue = yourExpense - friendExpense;
     const updatedFriend = { ...friend, debit: debitValue };
-    onAddFriend(updatedFriend);
+    console.log("handleUpdateFriend", updatedFriend);
+    onUpdateFriend(updatedFriend);
     setBillValue(0);
     setYourExpense(0);
     setFriendExpense(0);
-    setWhoPay("me");
+    setWhoPays("me");
   };
-  console.log("friends[curSelected]", friends[curSelected]);
+
   return (
     <section className="bill-section">
       <h2>Split Bill With Friend</h2>
@@ -61,7 +64,7 @@ export function SplitBill({ friends, curSelected, onAddFriend }) {
         </select>
       </div>
       <div>
-        <button onClick={() => handleAddFriend(friends[curSelected])}>
+        <button onClick={() => handleUpdateFriend(friends[curSelected])}>
           Split Bill
         </button>
       </div>

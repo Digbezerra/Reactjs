@@ -13,11 +13,18 @@ export function EatNSplit() {
     setFriends((friends) => [...friends, friend]);
   };
 
+  const onUpdateFriend = (friend) => {
+    console.log(friend);
+    const newFriendsArray = friends.map((item, index) => {
+      return index === curSelected ? { ...item, debit: friend.debit } : item;
+    });
+    console.log(newFriendsArray);
+    setFriends(newFriendsArray);
+  };
+
   const handleCurSelected = (index) => {
     setCurSelected((curOpen) => (index === curOpen ? null : index));
   };
-
-  console.log(friends[curSelected]);
 
   return (
     <>
@@ -31,7 +38,7 @@ export function EatNSplit() {
         <SplitBill
           curSelected={curSelected}
           friends={friends}
-          onAddFriend={onAddFriend}
+          onUpdateFriend={onUpdateFriend}
         />
       </div>
     </>
