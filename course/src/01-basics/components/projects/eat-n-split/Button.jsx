@@ -1,3 +1,3 @@
-export function Button({ children, handleAddFriend }) {
-  return <button onClick={handleAddFriend}>{children}</button>;
+export function Button({ children, action }) {
+  return <button onClick={action}>{children}</button>;
 }

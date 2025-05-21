@@ -6,7 +6,7 @@ export function AddFriend({ onAddFriend }) {
   const [imgUrl, setImgUrl] = useState("");
 
   const handleAddFriend = () => {
-    const newFriend = { name: friendName, imgUrl: imgUrl };
+    const newFriend = { name: friendName, imgUrl: imgUrl, debit: 0 };
     setFriendName("");
     setImgUrl("");
     onAddFriend(newFriend);
@@ -30,7 +30,7 @@ export function AddFriend({ onAddFriend }) {
           onChange={(e) => setImgUrl(e.target.value)}
         />
       </div>
-      <Button handleAddFriend={handleAddFriend}>Add</Button>
+      <Button action={handleAddFriend}>Add</Button>
     </div>
   );
 }
