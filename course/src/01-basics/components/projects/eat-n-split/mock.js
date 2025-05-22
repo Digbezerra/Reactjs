@@ -1,7 +1,7 @@
 export const friendsData = [
   {
     friendName: "",
-    hasDebitWithYou: false,
+    hasbalanceWithYou: false,
     imageUrl: "",
   },
 ];

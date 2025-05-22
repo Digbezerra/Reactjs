@@ -1,17 +1,17 @@
 export function Friend({ friend, handleCurSelected, index, curSelected }) {
-  let debitStatus = "";
+  let balanceStatus = "";
   let colorText = "";
   let selected = curSelected === index;
 
-  if (friend.debit > 0) {
-    debitStatus = `${friend.name} owes you ${friend.debit.toFixed(2)}$`;
+  if (friend.balance > 0) {
+    balanceStatus = `${friend.name} owes you ${friend.balance.toFixed(2)}$`;
     colorText = "#37b24d";
-  } else if (friend.debit < 0) {
-    debitStatus = `you owe ${(friend.debit * -1).toFixed(2)}$ to ${
+  } else if (friend.balance < 0) {
+    balanceStatus = `you owe ${(friend.balance * -1).toFixed(2)}$ to ${
       friend.name
     }`;
     colorText = "#e03131";
-  } else debitStatus = `You and ${friend.name} are even`;
+  } else balanceStatus = `You and ${friend.name} are even`;
 
   return (
     <li
@@ -22,7 +22,7 @@ export function Friend({ friend, handleCurSelected, index, curSelected }) {
       <div>
         <p className="friend-name">{friend.name}</p>
         <p className="bill-status" style={{ color: colorText }}>
-          {debitStatus}
+          {balanceStatus}
         </p>
       </div>
       <button onClick={() => handleCurSelected(index)}>Select</button>

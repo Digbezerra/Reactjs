@@ -45,6 +45,7 @@ select {
 }
 
 button {
+  display: block;
   margin-left: auto;
   padding: 1rem 2rem;
   color: #252525;
@@ -83,6 +84,7 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
+  margin-bottom: 2.4rem;
 }
 
 .friend-item {
@@ -126,6 +128,7 @@ button:hover {
   padding: 2rem;
   background-color: #f7f2e9;
   border-radius: 9px;
+  margin-bottom: 2.4rem;
 }
 
 .add-friend div {

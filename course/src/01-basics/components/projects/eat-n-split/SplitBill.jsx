@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import { Button } from "./Button";
-
 export function SplitBill({ friends, curSelected, onUpdateFriend }) {
   const [billValue, setBillValue] = useState(0);
   const [yourExpense, setYourExpense] = useState(0);
@@ -9,8 +7,8 @@ export function SplitBill({ friends, curSelected, onUpdateFriend }) {
   const [whoPays, setWhoPays] = useState("me");
 
   const handleUpdateFriend = (friend) => {
-    const debitValue = yourExpense - friendExpense + friend.debit;
-    const updatedFriend = { ...friend, debit: debitValue };
+    const balanceValue = yourExpense - friendExpense + friend.balance;
+    const updatedFriend = { ...friend, balance: balanceValue };
     onUpdateFriend(updatedFriend);
     setBillValue(0);
     setYourExpense(0);

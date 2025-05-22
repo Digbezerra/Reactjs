@@ -6,7 +6,13 @@ export function AddFriend({ onAddFriend }) {
   const [imgUrl, setImgUrl] = useState("");
 
   const handleAddFriend = () => {
-    const newFriend = { name: friendName, imgUrl: imgUrl, debit: 0 };
+    const id = crypto.randomUUID();
+    const newFriend = {
+      id,
+      name: friendName,
+      imgUrl: `${imgUrl}?=${id}`,
+      balance: 0,
+    };
     setFriendName("");
     setImgUrl("");
     onAddFriend(newFriend);
@@ -30,7 +36,9 @@ export function AddFriend({ onAddFriend }) {
           onChange={(e) => setImgUrl(e.target.value)}
         />
       </div>
-      <Button action={handleAddFriend}>Add</Button>
+      {!friendName || !imgUrl ? null : (
+        <Button action={handleAddFriend}>Add</Button>
+      )}
     </div>
   );
 }

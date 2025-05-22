@@ -1,12 +1,9 @@
-import { AddFriend } from "./AddFriend";
 import { Friend } from "./Friend";
 
-export function FriendsList({
-  friends,
-  onAddFriend,
-  handleCurSelected,
-  curSelected,
-}) {
+//Selected feature was applied from index, I need to change to Id.
+//but, was good to know how to develop an app index based, but I know that's a bad practice at all
+
+export function FriendsList({ friends, handleCurSelected, curSelected }) {
   return (
     <section className="friends-section">
       <ul className="friends-list">
@@ -14,7 +11,7 @@ export function FriendsList({
           return (
             <Friend
               friend={item}
-              debitValue={item.debitValue}
+              balanceValue={item.balanceValue}
               handleCurSelected={handleCurSelected}
               index={index}
               key={item.name}
@@ -23,7 +20,6 @@ export function FriendsList({
           );
         })}
       </ul>
-      <AddFriend onAddFriend={onAddFriend} />
     </section>
   );
 }
