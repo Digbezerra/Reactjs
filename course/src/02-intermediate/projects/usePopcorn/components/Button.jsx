@@ -1,7 +1,3 @@
-export function Button({ children, onClick }) {
-  return (
-    <button className="btn-toggle" onClick={() => onClick((open) => !open)}>
-      {children}
-    </button>
-  );
+export function Button({ children }) {
+  return <button className="btn-toggle">{children}</button>;
 }
