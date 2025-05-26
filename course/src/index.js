@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDom from "react-dom/client";
-import { App } from "./02-intermediate/projects/usePopcorn/App.jsx";
+import { App } from "./02-intermediate/challenges/textExpander";
 
 const root = ReactDom.createRoot(document.getElementById("root"));
 
