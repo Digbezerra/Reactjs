@@ -7,7 +7,6 @@ import { NumResults } from "./components/NumResults";
 import { MovieList } from "./components/MovieList";
 import { WatchedList } from "./components/WatchedList";
 import { WatchedSummary } from "./components/WatchedSummary";
-import { StarRating } from "./components/StarRating";
 
 import "./index.css";
 
@@ -19,7 +18,7 @@ export function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   return (
     <>
-      {/* <NavBar>
+      <NavBar>
         <SearchBar />
         <NumResults movies={movies} />
       </NavBar>
@@ -29,10 +28,9 @@ export function App() {
         </Box>
         <Box>
           <WatchedSummary watched={watched} />
-          <WatchedList watched={watched} /> 
+          <WatchedList watched={watched} />
         </Box>
-      </Main> */}
-      <StarRating maxRating={10} />
+      </Main>
     </>
   );
 }
