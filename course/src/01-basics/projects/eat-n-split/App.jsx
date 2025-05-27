@@ -78,6 +78,7 @@ export function App() {
           curSelected={curSelected}
           friends={friends}
           onUpdateFriend={onUpdateFriend}
+          key={friends[curSelected]?.id}
         />
       </div>
     </>
