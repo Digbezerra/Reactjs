@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function SearchBar() {
+export function SearchBar({ onHandleQuery }) {
   const [query, setQuery] = useState("");
   return (
     <input
