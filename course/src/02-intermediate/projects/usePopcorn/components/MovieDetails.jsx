@@ -16,7 +16,7 @@ export function MovieDetails({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [movieDetails, setMovieDetails] = useState({});
-  const [userRating, setUserRating] = useState(0);
+  const [userRating, setUserRating] = useState(null);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -101,9 +101,15 @@ export function MovieDetails({
                     userRating={userRating}
                     key={imdbid}
                   />
-                  <button className="btn-add" onClick={handleAddWatchedMovie}>
-                    + add as watched
-                  </button>
+                  {userRating ? (
+                    <button className="btn-add" onClick={handleAddWatchedMovie}>
+                      + add as watched
+                    </button>
+                  ) : (
+                    <button className="btn-disabled" disabled>
+                      Rate the movie
+                    </button>
+                  )}
                 </>
               ) : (
                 <p>You rated this movie: {watchedUserRating} ⭐</p>
@@ -120,7 +126,19 @@ export function MovieDetails({
             </p>
           </section>
           <button className="btn-back" onClick={() => handleSelectedId(null)}>
-            &larr;
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M19 12H6M12 5l-7 7 7 7" />
+            </svg>
           </button>
         </div>
       )}

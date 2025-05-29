@@ -1,6 +1,6 @@
 import { MovieItemRating } from "./MovieItemRating";
 
-export function WatchedList({ watched, onSelectMovie }) {
+export function WatchedList({ watched, onSelectMovie, onDeleteMovie }) {
   return (
     <>
       <ul className="list">
@@ -9,6 +9,7 @@ export function WatchedList({ watched, onSelectMovie }) {
             movie={movie}
             key={movie.imdbID}
             onSelectMovie={onSelectMovie}
+            onDeleteMovie={onDeleteMovie}
           />
         ))}
       </ul>

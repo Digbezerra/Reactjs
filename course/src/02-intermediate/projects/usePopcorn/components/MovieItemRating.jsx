@@ -1,10 +1,6 @@
-export function MovieItemRating({ movie, onSelectMovie }) {
+export function MovieItemRating({ movie, onDeleteMovie }) {
   return (
-    <li
-      key={movie?.imdbID}
-      onClick={() => onSelectMovie(movie.imdbID)}
-      className="movie-item"
-    >
+    <li key={movie?.imdbID}>
       <img src={movie.poster} alt={`${movie.title} poster`} />
       <h3>{movie.title}</h3>
       <div>
@@ -21,6 +17,12 @@ export function MovieItemRating({ movie, onSelectMovie }) {
           <span>{movie.runtime} min</span>
         </p>
       </div>
+      <button
+        className="btn-delete"
+        onClick={() => onDeleteMovie(movie.imdbID)}
+      >
+        x
+      </button>
     </li>
   );
 }

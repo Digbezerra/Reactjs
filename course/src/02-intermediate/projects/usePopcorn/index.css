@@ -75,7 +75,7 @@ body {
   max-width: 42rem;
   background-color: var(--color-background-500);
   border-radius: 0.9rem;
-  overflow: scroll;
+  overflow-x: hidden;
   position: relative;
 }
 
@@ -324,6 +324,18 @@ body {
   padding: 1rem;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-disabled {
+  background-color: #e6deff;
+  color: #686868;
+  border: none;
+  border-radius: 10rem;
+  font-size: 1.4rem;
+  padding: 1rem;
+  font-weight: bold;
+  cursor: not-allowed;
   transition: all 0.3s;
 }
 
