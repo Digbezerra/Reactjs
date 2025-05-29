@@ -1,8 +1,8 @@
-export function MovieItem({ movie, onSelect }) {
+export function MovieItem({ movie, onSelectMovie }) {
   return (
     <li
       key={movie.imdbID}
-      onClick={() => onSelect(movie.imdbID)}
+      onClick={() => onSelectMovie(movie.imdbID)}
       className="movie-item"
     >
       <img src={movie.Poster} alt={`${movie.Title} poster`} />

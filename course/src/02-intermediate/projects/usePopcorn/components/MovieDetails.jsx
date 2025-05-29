@@ -1,44 +1,130 @@
+import { useEffect, useState } from "react";
 import { StarRating } from "./StarRating";
 
-export function MovieDetails({ imdbID, movieDetails }) {
+import { KEY } from "../mock/moviesData";
+import { Loader } from "./Loader";
+import { ErrorMessage } from "./ErrorMessage";
+
+export function MovieDetails({
+  imdbid,
+  handleSelectedId,
+  onAddWatchedMovie,
+  watched,
+  selectedId,
+  // isWatchedMovie,
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [movieDetails, setMovieDetails] = useState({});
+  const [userRating, setUserRating] = useState(0);
+
+  const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
+  const watchedUserRating = watched.find(
+    (movie) => movie.imdbID === selectedId
+  )?.userRating;
+
+  useEffect(() => {
+    async function getMovieDetails() {
+      try {
+        setIsLoading(true);
+        setError("");
+
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&i=${imdbid}`
+        );
+        if (!res.ok)
+          throw new Error("Something went wront with fetching movies");
+        const data = await res.json();
+        if (data.Response === "False") setError(data.Error);
+        setMovieDetails(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getMovieDetails();
+  }, [imdbid]);
+
   const {
-    Title,
-    Actors,
-    Director,
-    Poster,
-    Genre,
-    Released,
+    imdbID,
+    Title: title,
+    Actors: actors,
+    Director: director,
+    Poster: poster,
+    Genre: genre,
+    Released: released,
     imdbRating,
-    Plot,
-    Runtime,
+    Plot: plot,
+    Runtime: runtime,
   } = movieDetails;
+
+  const handleAddWatchedMovie = () => {
+    const newWatchedMovie = {
+      imdbID,
+      imdbRating: Number(imdbRating),
+      title,
+      poster,
+      runtime: Number(runtime.split(" ").at(0)),
+      userRating,
+    };
+    onAddWatchedMovie(newWatchedMovie);
+    handleSelectedId(null);
+  };
+
+  const handleRating = (rating) => {
+    setUserRating(rating);
+  };
+
   return (
     <>
-      <div className="details">
-        <header>
-          <img src={Poster} alt={Title} />
-          <div className="details-overview">
-            <h2>{Title}</h2>
-            <p>{Released}</p>
-            <p>{Genre}</p>
-            <p>⭐ {imdbRating} IMDb Rating</p>
-          </div>
-        </header>
-        <section>
-          <div className="rating">
-            <StarRating maxRating={10} size={24} />
-          </div>
-          <p>
-            <em>{Plot}</em>
-          </p>
-          <p>
-            <strong>Starring:</strong> {Actors}
-          </p>
-          <p>
-            <strong>Directed By:</strong> {Director}
-          </p>
-        </section>
-      </div>
+      {isLoading && <Loader />}
+      {!isLoading && !error && (
+        <div className="details">
+          <header>
+            <img src={poster} alt={title} />
+            <div className="details-overview">
+              <h2>{title}</h2>
+              <p>{released}</p>
+              <p>{genre}</p>
+              <p>⭐ {imdbRating} IMDb Rating</p>
+            </div>
+          </header>
+          <section>
+            <div className="rating">
+              {!isWatched ? (
+                <>
+                  <StarRating
+                    maxRating={10}
+                    size={24}
+                    onSetRating={handleRating}
+                    userRating={userRating}
+                    key={imdbid}
+                  />
+                  <button className="btn-add" onClick={handleAddWatchedMovie}>
+                    + add as watched
+                  </button>
+                </>
+              ) : (
+                <p>You rated this movie: {watchedUserRating} ⭐</p>
+              )}
+            </div>
+            <p>
+              <em>{plot}</em>
+            </p>
+            <p>
+              <strong>Starring:</strong> {actors}
+            </p>
+            <p>
+              <strong>Directed By:</strong> {director}
+            </p>
+          </section>
+          <button className="btn-back" onClick={() => handleSelectedId(null)}>
+            &larr;
+          </button>
+        </div>
+      )}
+      {error && <ErrorMessage message={error} />}
     </>
   );
 }

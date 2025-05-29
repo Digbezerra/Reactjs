@@ -1,8 +1,12 @@
-export function MovieItemRating({ movie }) {
+export function MovieItemRating({ movie, onSelectMovie }) {
   return (
-    <li key={movie.imdbID}>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
-      <h3>{movie.Title}</h3>
+    <li
+      key={movie?.imdbID}
+      onClick={() => onSelectMovie(movie.imdbID)}
+      className="movie-item"
+    >
+      <img src={movie.poster} alt={`${movie.title} poster`} />
+      <h3>{movie.title}</h3>
       <div>
         <p>
           <span>⭐️</span>

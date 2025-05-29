@@ -15,7 +15,7 @@ import { Loader } from "./components/Loader";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { MovieDetails } from "./components/MovieDetails";
 
-const KEY = "c6966a00";
+import { KEY } from "./mock/moviesData";
 
 export function App() {
   const [movies, setMovies] = useState([]);
@@ -25,10 +25,13 @@ export function App() {
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState("");
-  const [movieDetails, setMovieDetails] = useState([]);
 
   const handleSelectedId = (imdbID) => {
     setSelectedId(imdbID);
+  };
+
+  const handleAddWatchedMovie = (movie) => {
+    setWatched((watched) => [...watched, movie]);
   };
 
   useEffect(() => {
@@ -60,33 +63,6 @@ export function App() {
     fetchMovies();
   }, [query]);
 
-  useEffect(() => {
-    async function fetchMovies() {
-      try {
-        setIsLoadingSummary(true);
-        const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
-        );
-        if (!res.ok)
-          throw new Error("Something went wront with fetching movies");
-
-        const data = await res.json();
-        if (data.Response === "False") setError(data.Error);
-        setMovieDetails(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setIsLoadingSummary(false);
-      }
-    }
-    if (selectedId.length < 3) {
-      setMovies([]);
-      setError("");
-      return;
-    }
-    fetchMovies();
-  }, [selectedId]);
-
   return (
     <>
       <NavBar>
@@ -97,7 +73,7 @@ export function App() {
         <Box>
           {isLoading && <Loader />}
           {!isLoading && !error && (
-            <MovieList movies={movies} onSelect={handleSelectedId} />
+            <MovieList movies={movies} onSelectMovie={handleSelectedId} />
           )}
           {error && <ErrorMessage message={error} />}
           {!query && <ErrorMessage message="Search a movie" />}
@@ -105,12 +81,19 @@ export function App() {
         <Box>
           {isLoadingSummary && <Loader />}
           {selectedId && !isLoadingSummary && !error && (
-            <MovieDetails imdbID={selectedId} movieDetails={movieDetails} />
+            <MovieDetails
+              imdbid={selectedId}
+              handleSelectedId={setSelectedId}
+              onAddWatchedMovie={handleAddWatchedMovie}
+              watched={watched}
+              selectedId={selectedId}
+              // isWatchedMovie={watchedMovie}
+            />
           )}
           {!selectedId && (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedList watched={watched} />
+              <WatchedList watched={watched} onSelectMovie={handleSelectedId} />
             </>
           )}
         </Box>
