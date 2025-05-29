@@ -2,7 +2,7 @@ export function ErrorMessage({ message }) {
   return (
     <>
       <p className="error">
-        <span>⛔ </span>
+        <span>{message === "Search a movie" ? "🎬" : "⛔"} </span>
         {message}
       </p>
     </>

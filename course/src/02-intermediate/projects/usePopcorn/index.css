@@ -76,7 +76,6 @@ body {
   background-color: var(--color-background-500);
   border-radius: 0.9rem;
   overflow: scroll;
-  overflow-x: hidden;
   position: relative;
 }
 
@@ -359,6 +358,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/**
+MY STYLES
+*/
+
+.movie-item {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.movie-item:hover {
+  background-color: #343a40;
+  transform: translateY(-2px);
 }
 
 /*
