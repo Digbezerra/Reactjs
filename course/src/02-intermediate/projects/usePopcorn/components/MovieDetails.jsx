@@ -11,6 +11,7 @@ export function MovieDetails({
   onAddWatchedMovie,
   watched,
   selectedId,
+  onCloseMovie,
   // isWatchedMovie,
 }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +23,31 @@ export function MovieDetails({
   const watchedUserRating = watched.find(
     (movie) => movie.imdbID === selectedId
   )?.userRating;
+
+  const {
+    imdbID,
+    Title: title,
+    Actors: actors,
+    Director: director,
+    Poster: poster,
+    Genre: genre,
+    Released: released,
+    imdbRating,
+    Plot: plot,
+    Runtime: runtime,
+  } = movieDetails;
+
+  useEffect(() => {
+    const callback = (e) => {
+      if (e.code === "Escape") {
+        onCloseMovie();
+      }
+    };
+    document.addEventListener("keydown", callback);
+    return () => {
+      document.removeEventListener("keydown", callback);
+    };
+  }, [onCloseMovie]);
 
   useEffect(() => {
     async function getMovieDetails() {
@@ -46,18 +72,14 @@ export function MovieDetails({
     getMovieDetails();
   }, [imdbid]);
 
-  const {
-    imdbID,
-    Title: title,
-    Actors: actors,
-    Director: director,
-    Poster: poster,
-    Genre: genre,
-    Released: released,
-    imdbRating,
-    Plot: plot,
-    Runtime: runtime,
-  } = movieDetails;
+  useEffect(() => {
+    if (!movieDetails) return;
+    document.title = `Movie | ${movieDetails?.Title}`;
+
+    return function () {
+      document.title = "UsePopcorn";
+    };
+  }, [movieDetails]);
 
   const handleAddWatchedMovie = () => {
     const newWatchedMovie = {
