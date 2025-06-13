@@ -15,16 +15,16 @@ import { Loader } from "./components/Loader";
 import { ErrorMessage } from "./components/ErrorMessage";
 import { MovieDetails } from "./components/MovieDetails";
 
-import { KEY } from "./mock/moviesData";
+import { useMovies } from "./hooks/useMovie";
+import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 export function App() {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingSummary, setIsLoadingSummary] = useState(false);
-  const [error, setError] = useState("");
   const [query, setQuery] = useState("");
+  const [isLoadingSummary, setIsLoadingSummary] = useState(false);
   const [selectedId, setSelectedId] = useState("");
+
+  const { movies, isLoading, error } = useMovies(query);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   const handleSelectedId = (imdbID) => {
     setSelectedId(imdbID);
@@ -46,42 +46,6 @@ export function App() {
   useEffect(() => {
     document.title = "UsePopcorn";
   }, []);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchMovies() {
-      try {
-        setIsLoading(true);
-        setError("");
-        const res = await fetch(
-          `http://www.omdbapi.com/?i=tt3896198&apikey=${KEY}&s=${query}`,
-          { signal: controller.signal }
-        );
-
-        if (!res.ok)
-          throw new Error("Something went wront with fetching movies");
-
-        const data = await res.json();
-        if (data.Response === "False") setError(data.Error);
-        setMovies(data.Search);
-      } catch (err) {
-        if (err.name !== "AbortError") setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    if (query.length < 3) {
-      setMovies([]);
-      setError("");
-      return;
-    }
-    fetchMovies();
-
-    return () => {
-      controller.abort();
-    };
-  }, [query]);
 
   return (
     <>

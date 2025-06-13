@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useKey } from "../hooks/useKey";
 import { StarRating } from "./StarRating";
 
 import { KEY } from "../mock/moviesData";
@@ -37,17 +38,7 @@ export function MovieDetails({
     Runtime: runtime,
   } = movieDetails;
 
-  useEffect(() => {
-    const callback = (e) => {
-      if (e.code === "Escape") {
-        onCloseMovie();
-      }
-    };
-    document.addEventListener("keydown", callback);
-    return () => {
-      document.removeEventListener("keydown", callback);
-    };
-  }, [onCloseMovie]);
+  useKey("Escape", onCloseMovie);
 
   useEffect(() => {
     async function getMovieDetails() {

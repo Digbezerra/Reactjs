@@ -61,14 +61,18 @@ export function App() {
           <option value="USD">USD</option>
           <option value="CAD">CAD</option>
           <option value="INR">INR</option>
+          <option value="BRL">BRL</option>
         </select>
         <select value={rate} onChange={(e) => setRate(e.target.value)}>
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
           <option value="CAD">CAD</option>
           <option value="INR">INR</option>
+          <option value="BRL">BRL</option>
         </select>
-        <p>OUTPUT {convertedCurrency}</p>
+        <p>
+          OUTPUT {convertedCurrency} {rate}
+        </p>
       </div>
     </>
   );
