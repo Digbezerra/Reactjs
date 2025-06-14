@@ -31,11 +31,13 @@ export function useMovies(query) {
         setIsLoading(false);
       }
     }
+
     if (query?.length < 3) {
       setMovies([]);
       setError("");
       return;
     }
+
     fetchMovies();
 
     return () => {
