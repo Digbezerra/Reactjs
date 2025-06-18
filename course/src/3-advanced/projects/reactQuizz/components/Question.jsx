@@ -1,6 +1,6 @@
-import { Options } from "./QuestionOption";
+import { Options } from "./Options";
 
-export function Question({ question, dispatch, answer }) {
+export function Question({ question, answer, dispatch }) {
   return (
     <>
       <h4>{question.question}</h4>
@@ -12,11 +12,6 @@ export function Question({ question, dispatch, answer }) {
           correctOption={question.correctOption}
         />
       </div>
-      {answer !== null && (
-        <button onClick={() => dispatch({ type: "nextQuestion" })}>
-          Proxima pergunta
-        </button>
-      )}
     </>
   );
 }
