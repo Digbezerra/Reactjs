@@ -1,6 +1,6 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
@@ -24,18 +24,81 @@ export function convertToEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
+const initialState = {
+  cityName: "",
+  country: "",
+  date: new Date(),
+  notes: "",
+  position: {
+    lat: "",
+    lng: "",
+  },
+  emoji: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "setCityName":
+      return {
+        ...state,
+        cityName: action.payload,
+      };
+    case "setCountry":
+      return {
+        ...state,
+        countryName: action.payload,
+      };
+    case "setEmoji":
+      return {
+        ...state,
+        emoji: convertToEmoji(action.payload),
+      };
+    case "setData":
+      return {
+        ...state,
+        date: action.payload,
+      };
+    case "setNotes":
+      return {
+        ...state,
+        notes: action.payload,
+      };
+    default:
+      throw new Error("There's something wrong with action");
+  }
+}
+
 function Form() {
+  const [{ cityName, date, notes, emoji, country }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   const [isLoadingGeoCoding, setIsLoadingGeoCoding] = useState(false);
-  const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [notes, setNotes] = useState("");
-  const [lat, lng] = useUrlPosition([]);
-  const [emoji, setEmoji] = useState("");
   const [geoCodingError, setGeoCodingError] = useState("");
+
+  const [lat, lng] = useUrlPosition([]);
+  const { createCity, isLoading } = useCities();
   const navigate = useNavigate();
 
-  const { createCity, isLoading } = useCities();
+  const handleSetCityName = (cityName) => {
+    dispatch({ type: "setCityName", payload: cityName });
+  };
+
+  const handleSetCountry = (countryName) => {
+    dispatch({ type: "setCountry", payload: countryName });
+  };
+
+  const handleSetEmoji = (countryCode) => {
+    dispatch({ type: "setEmoji", payload: countryCode });
+  };
+
+  const handleSetDate = (date) => {
+    dispatch({ type: "setDate", payload: date });
+  };
+
+  const handleSetNotes = (notes) => {
+    dispatch({ type: "setNotes", payload: notes });
+  };
 
   useEffect(() => {
     if (!lat && !lng) return;
@@ -52,9 +115,9 @@ function Form() {
             "That doesn't seems to be a valid location, please click on a city. 😉"
           );
         }
-        setCityName(data.locality || data.locality || "");
-        setCountry(data.countryName);
-        setEmoji(convertToEmoji(data.countryCode));
+        handleSetCityName(data.locality || data.locality || "");
+        handleSetCountry(data.countryName);
+        handleSetEmoji(data.countryCode);
       } catch (err) {
         setGeoCodingError(err.message);
       } finally {
@@ -96,7 +159,7 @@ function Form() {
         <label htmlFor="cityName">City name</label>
         <input
           id="cityName"
-          onChange={(e) => setCityName(e.target.value)}
+          onChange={(e) => handleSetCityName(e.target.value)}
           value={cityName}
         />
         <span className={styles.flag}>{emoji}</span>
@@ -106,7 +169,7 @@ function Form() {
         <DatePicker
           id="date"
           selected={date}
-          onChange={(date) => setDate(date)}
+          onChange={(date) => handleSetDate(date)}
           dateFormat={"dd/MM/yyyy"}
         />
       </div>
@@ -114,7 +177,7 @@ function Form() {
         <label htmlFor="notes">Notes about your trip to {cityName}</label>
         <textarea
           id="notes"
-          onChange={(e) => setNotes(e.target.value)}
+          onChange={(e) => handleSetNotes(e.target.value)}
           value={notes}
         />
       </div>
