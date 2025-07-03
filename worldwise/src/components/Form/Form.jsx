@@ -38,27 +38,27 @@ const initialState = {
 
 function reducer(state, action) {
   switch (action.type) {
-    case "setCityName":
+    case "cityName/created":
       return {
         ...state,
         cityName: action.payload,
       };
-    case "setCountry":
+    case "country/created":
       return {
         ...state,
         countryName: action.payload,
       };
-    case "setEmoji":
+    case "emoji/created":
       return {
         ...state,
         emoji: convertToEmoji(action.payload),
       };
-    case "setData":
+    case "date/created":
       return {
         ...state,
         date: action.payload,
       };
-    case "setNotes":
+    case "notes/created":
       return {
         ...state,
         notes: action.payload,
@@ -81,23 +81,23 @@ function Form() {
   const navigate = useNavigate();
 
   const handleSetCityName = (cityName) => {
-    dispatch({ type: "setCityName", payload: cityName });
+    dispatch({ type: "cityName/created", payload: cityName });
   };
 
   const handleSetCountry = (countryName) => {
-    dispatch({ type: "setCountry", payload: countryName });
+    dispatch({ type: "country/created", payload: countryName });
   };
 
   const handleSetEmoji = (countryCode) => {
-    dispatch({ type: "setEmoji", payload: countryCode });
+    dispatch({ type: "emoji/created", payload: countryCode });
   };
 
   const handleSetDate = (date) => {
-    dispatch({ type: "setDate", payload: date });
+    dispatch({ type: "date/created", payload: date });
   };
 
   const handleSetNotes = (notes) => {
-    dispatch({ type: "setNotes", payload: notes });
+    dispatch({ type: "notes/created", payload: notes });
   };
 
   useEffect(() => {
