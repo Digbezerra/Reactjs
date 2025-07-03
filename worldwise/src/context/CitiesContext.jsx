@@ -1,12 +1,65 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useReducer,
+} from "react";
 
 const BASE_URL = "http://localhost:8000";
 const CitiesContext = createContext();
 
+const initialState = {
+  cities: [],
+  currentCity: {},
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "setCities":
+      return {
+        ...state,
+        cities: [...action.payload],
+      };
+    case "setCurrentCity":
+      return {
+        ...state,
+        currentCity: action.payload,
+      };
+    case "createCity":
+      return {
+        ...state,
+        cities: [...state.cities, action.payload],
+      };
+    case "deleteCity":
+      return {
+        ...state,
+        cities: state.cities.filter((city) => city.id !== action.payload),
+      };
+    default:
+      throw new Error("Something wrong with action");
+  }
+}
+
 function CitiesProvider({ children }) {
-  const [cities, setCities] = useState([]);
-  const [currentCity, setCurrentCity] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [{ cities, currentCity }, dispatch] = useReducer(reducer, initialState);
+
+  const handleSetCities = (data) => {
+    dispatch({ type: "setCities", payload: data });
+  };
+
+  const handleGetCurrentCity = (data) => {
+    dispatch({ type: "setCurrentCity", payload: data });
+  };
+
+  const handleCreateCity = (newCity) => {
+    dispatch({ type: "createCity", payload: newCity });
+  };
+
+  const handleDeleteCity = (id) => {
+    dispatch({ type: "deleteCity", payload: id });
+  };
 
   useEffect(() => {
     async function fetchCities() {
@@ -14,7 +67,7 @@ function CitiesProvider({ children }) {
         setIsLoading(true);
         const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
-        setCities(data);
+        handleSetCities(data);
       } catch (err) {
         throw new Error("Error when trying to fetch cities");
       } finally {
@@ -23,19 +76,14 @@ function CitiesProvider({ children }) {
     }
 
     fetchCities();
-
-    // fetch("http://localhost:8000/cities")
-    //   .then((res) => res.json())
-    //   .then((data) => setCities(data))
-    //   .catch((err) => setError(err));
-  }, [setCities]);
+  }, []);
 
   async function getCurrentCity(id) {
     try {
       setIsLoading(true);
       const res = await fetch(`${BASE_URL}/cities/${id}`);
       const data = await res.json();
-      setCurrentCity(data);
+      handleGetCurrentCity(data);
     } catch (err) {
       throw new Error("Error when trying to fetch cities");
     } finally {
@@ -54,7 +102,22 @@ function CitiesProvider({ children }) {
         },
       });
       const data = await res.json();
-      setCities((cities) => [...cities, data]);
+      handleCreateCity(data);
+      handleGetCurrentCity(data);
+    } catch (err) {
+      throw new Error("Error when trying to fetch cities");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function deleteCity(id) {
+    try {
+      setIsLoading(true);
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+      handleDeleteCity(id);
     } catch (err) {
       throw new Error("Error when trying to fetch cities");
     } finally {
@@ -64,7 +127,14 @@ function CitiesProvider({ children }) {
 
   return (
     <CitiesContext.Provider
-      value={{ cities, isLoading, currentCity, getCurrentCity, createCity }}
+      value={{
+        cities,
+        isLoading,
+        currentCity,
+        getCurrentCity,
+        createCity,
+        deleteCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>
