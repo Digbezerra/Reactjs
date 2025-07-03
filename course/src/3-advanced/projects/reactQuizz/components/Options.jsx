@@ -1,5 +1,10 @@
-export function Options({ options, answer, dispatch, correctOption }) {
+import { useQuiz } from "../context/QuizContext";
+
+export function Options() {
+  const { answer, dispatch, questions, index } = useQuiz();
+  const { options, correctOption } = questions.at(index);
   const hasAnswer = answer !== null;
+
   return (
     <>
       {options.map((option, index) => {

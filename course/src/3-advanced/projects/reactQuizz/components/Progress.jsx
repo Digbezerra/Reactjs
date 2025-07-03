@@ -1,4 +1,7 @@
-export function Progress({ points, questions, index, answer, totalPoints }) {
+import { useQuiz } from "../context/QuizContext";
+
+export function Progress() {
+  const { points, questions, index, answer, totalPoints } = useQuiz();
   const totalQuestions = questions.length;
 
   return (
