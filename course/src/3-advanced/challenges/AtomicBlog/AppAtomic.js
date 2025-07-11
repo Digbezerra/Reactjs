@@ -1,4 +1,4 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState, useMemo, memo } from "react";
 import { faker } from "@faker-js/faker";
 import "./style.css";
 
@@ -58,7 +58,7 @@ function App() {
         setSearchQuery={setSearchQuery}
       />
       <Main posts={searchedPosts} onAddPost={handleAddPost} />
-      <Archive show={false} />
+      <Archive postsLength={posts.length} />
       <Footer />
     </section>
   );
@@ -155,18 +155,24 @@ function List({ posts }) {
   );
 }
 
-const Archive = memo(function Archive({ show }) {
+const Archive = memo(function Archive({ postsLength }) {
+  const [showArchive, setShowArchive] = useState(false);
+
+  const archiveOptions = useMemo(() => {
+    return {
+      show: showArchive,
+      title: `Post archive in addition to ${postsLength} main post`,
+    };
+  }, [postsLength, showArchive]);
   // Here we don't need the setter function. We're only using state to store these posts because the callback function passed into useState (which generates the posts) is only called once, on the initial render. So we use this trick as an optimization technique, because if we just used a regular variable, these posts would be re-created on every render. We could also move the posts outside the components, but I wanted to show you this trick 😉
   const [posts] = useState(() =>
     // 💥 WARNING: This might make your computer slow! Try a smaller `length` first
     Array.from({ length: 10000 }, () => createRandomPost())
   );
 
-  const [showArchive, setShowArchive] = useState(show);
-
   return (
     <aside>
-      <h2>Post archive</h2>
+      <h2>{archiveOptions.title}</h2>
       <button onClick={() => setShowArchive((s) => !s)}>
         {showArchive ? "Hide archive posts" : "Show archive posts"}
       </button>
