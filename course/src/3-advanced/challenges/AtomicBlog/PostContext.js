@@ -1,4 +1,10 @@
-import { createContext, useState, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  useMemo,
+  useCallback,
+} from "react";
 import { faker } from "@faker-js/faker";
 
 function createRandomPost() {
@@ -26,27 +32,25 @@ function PostProvider({ children }) {
         )
       : posts;
 
-  function handleAddPost(post) {
+  const handleAddPost = useCallback(function handleAddPost(post) {
     setPosts((posts) => [post, ...posts]);
-  }
+  }, []);
 
   function handleClearPosts() {
     setPosts([]);
   }
 
-  return (
-    <PostContext.Provider
-      value={{
-        posts: searchedPosts,
-        onAddPost: handleAddPost,
-        onClearPosts: handleClearPosts,
-        searchQuery,
-        setSearchQuery,
-      }}
-    >
-      {children}
-    </PostContext.Provider>
-  );
+  const value = useMemo(() => {
+    return {
+      posts: searchedPosts,
+      onAddPost: handleAddPost,
+      onClearPosts: handleClearPosts,
+      searchQuery,
+      setSearchQuery,
+    };
+  }, [searchQuery, searchedPosts, handleAddPost]);
+
+  return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
 }
 
 const usePosts = () => {

@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, memo } from "react";
+import { useEffect, useState, useMemo, memo, useCallback } from "react";
 import { faker } from "@faker-js/faker";
 import "./style.css";
 
@@ -26,9 +26,9 @@ function App() {
         )
       : posts;
 
-  function handleAddPost(post) {
+  const handleAddPost = useCallback(function handleAddPost(post) {
     setPosts((posts) => [post, ...posts]);
-  }
+  }, []);
 
   function handleClearPosts() {
     setPosts([]);
@@ -58,7 +58,7 @@ function App() {
         setSearchQuery={setSearchQuery}
       />
       <Main posts={searchedPosts} onAddPost={handleAddPost} />
-      <Archive postsLength={posts.length} />
+      <Archive postsLength={posts.length} onAddPost={handleAddPost} />
       <Footer />
     </section>
   );
@@ -155,7 +155,7 @@ function List({ posts }) {
   );
 }
 
-const Archive = memo(function Archive({ postsLength }) {
+const Archive = memo(function Archive({ postsLength, onAddPost }) {
   const [showArchive, setShowArchive] = useState(false);
 
   const archiveOptions = useMemo(() => {
@@ -184,7 +184,7 @@ const Archive = memo(function Archive({ postsLength }) {
               <p>
                 <strong>{post.title}:</strong> {post.body}
               </p>
-              {/* <button onClick={() => onAddPost(post)}>Add as new post</button> */}
+              <button onClick={() => onAddPost(post)}>Add as new post</button>
             </li>
           ))}
         </ul>
