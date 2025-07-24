@@ -1,4 +1,4 @@
-const CUSTOMER_CREATE = "customer/create";
+const CUSTOMER_CREATE = "customer/createCustomer";
 const CUSTOMER_UPDATE_NAME = "customer/updateName";
 
 const initialStateCustomer = {
