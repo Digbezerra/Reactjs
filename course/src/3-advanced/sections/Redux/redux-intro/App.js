@@ -6,7 +6,7 @@ import "./index.css";
 import { useSelector } from "react-redux";
 
 function App() {
-  const fullName = useSelector((state) => state.customer.fullName);
+  const fullName = useSelector((state) => state.customer.fullName); //useSelector makes possible to select a state from redux
   return (
     <div>
       <h1>🏦 The React-Redux Bank ⚛️</h1>

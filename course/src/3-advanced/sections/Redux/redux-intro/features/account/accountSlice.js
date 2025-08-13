@@ -1,12 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const ACCOUNT_DEPOSIT = "account/deposit";
-const IS_CONVERTING_CURRENCY = "acount/convertingCurrency";
-// const ACCOUNT_WITHDRAW = "account/withdraw";
-// const ACCOUNT_REQUEST_LOAN = "account/requestLoan";
-// const ACCOUNT_PAY_LOAN = "account/payLoan";
-
-// const LOAN_PURPOSE_PLACEHOLDER = "insert the loanPurpose";
 
 const initialState = {
   balance: 0,
